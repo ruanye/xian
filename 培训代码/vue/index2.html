@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>class 与 style 的动态绑定</title>
+    <script src="./vue.global.js"></script>
+    <style>
+        div{
+            width: 100px;
+            height: 100px;
+           background: #000;
+        }
+        div.active{
+            color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- :class 动态绑定 class 前面表示需要显示 class 名  后面表示class 显示的条件-->
+         <div :class="{active:isActive}">这是动态绑定的class</div>
+         <!-- ：style 表示动态绑定的 style  -->
+         <div :style="{color:textColor,fontSize:textSize +'px'}">这是动态绑定的 style</div>
+    </div>
+    <script>
+        const {ref,reactive} = Vue;
+        const app = Vue.createApp({
+            setup(){
+                let isActive = ref(true);
+                const textColor = ref('red');
+                const textSize = ref(30)
+                return{
+                    isActive,
+                    textColor,
+                    textSize
+                }
+            }
+        })
+        app.mount('#app') // 把 vue 示例进行挂载
+    </script>
+</body>
+</html>

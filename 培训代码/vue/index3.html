@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>class 与 style 的动态绑定</title>
+    <script src="./vue.global.js"></script>
+    
+</head>
+<body>
+    <div id="app">
+        <!-- v-if  v-else  v-else-if -->
+        <p v-if="show">第一行</p>
+        <p v-else>第二行</p>
+    </div>
+    <script>
+        const {ref,reactive} = Vue;
+        const app = Vue.createApp({
+            setup(){
+               let show = ref(false)
+               return {
+                show
+               }
+            }
+        })
+        app.mount('#app') // 把 vue 示例进行挂载
+    </script>
+</body>
+</html>

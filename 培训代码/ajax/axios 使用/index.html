@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <script>
+         // 请求和响应的拦截  统一处理所有请求的请求和响应 
+         axios.interceptors.request.use(config=>{
+           
+           config.headers.Authorization = 'Bearer your_token_here';
+           return config
+        },err=>{
+           console.log(err)
+        })
+        axios.interceptors.response.use(res=>{
+           return res.data
+        },err=>{
+           console.log(err)
+        })
+         // get 请求携带参数   // delete 请求携带参数
+        //  axios.get(`../data.json?api=1&name=1`).then(res=>{
+        //     console.log(res.data)
+        //  });
+       
+        //  axios.get('../data.json',{params:{api:1,name:1}})
+         
+         // post 请求携带参数  put 
+        //  axios.post('https://jsonplaceholder.typicode.com/posts',{name:1}).then(res=>{
+        //     console.log(res.data)
+        //  })
+        //  axios({
+        //     methods:'get',
+        //     url:'../data.json',
+        //     params:{api:1,name:1}
+        //  }).then(res=>{
+        //     console.log(res.data)
+        //  })
+         // axios 直接括号这种写法 get 用 params  post 用 data
+         axios({
+            methods:'post',
+            url:'https://jsonplaceholder.typicode.com/posts',
+            data:{api:1,name:1}
+         }).then(res=>{
+            console.log(res,'xxx')
+         })
+       
+         
+         let instance = axios.create() //   创建 一个 axios 示例   多个实例互相不影响 
+         
+         
+         
+         
+    </script>
+   
+    
+</body>
+</html>

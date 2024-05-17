@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .rotate {
+            margin-top: 100px;
+            width: 100px;
+            height: 20px;
+            background-color: aqua;
+            transform: rotate(45deg);
+        }
+        .scale1,.scale2 {
+            margin-top: 100px;
+            margin-left: 100px;
+            width: 100px;
+            height: 100px;
+            background-color: aquamarine;
+        }
+        .scale1{
+             transform: scale(2);
+        }
+        .scale2{
+             transform: scale(0.2);
+        }
+        .flex{
+            display: flex;
+        }
+        .translate{
+            margin: 100px;
+            width: 60px;
+            height: 40px;
+            background-color: bisque;
+            transform: translate(100px,-60px);
+        }
+        .skew{
+            margin: 100px;
+            width: 60px;
+            height: 40px;
+            background-color: blueviolet;
+            transform: skew(0deg,-45deg);
+        }
+        .radius{
+            margin: 60px;
+            width: 60px;
+            height: 60px;
+            background-color: crimson;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="flex">
+    <div class="rotate"></div>
+    <div class="scale1">放大</div>
+    <div class="scale2">缩小</div>
+    <div class="translate"></div>
+    <div class="skew"></div>
+    <div class="radius"></div>
+  </div>
+</body>
+</html>

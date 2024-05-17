@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CRUD 示例</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./lib/mock-min.js"></script>
+    <script src="./mock.js"></script>
+    <style>
+        /* 样式.css */
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            margin: 0;
+            text-align: center;
+        }
+
+        h2 {
+            margin: 20px 0 10px 0;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 5px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        #edit-form {
+            display: block;
+            background-color: #f2f2f2;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>CRUD 示例</h1>
+
+    <h2>创建用户</h2>
+    <form id="create-form">
+        <label for="name">姓名</label>
+        <input type="text" id="name" required />
+        <label for="age">年龄</label>
+        <input type="number" id="age" required min="1" />
+        <button type="submit">创建</button>
+    </form>
+
+    <h2>用户列表</h2>
+    <ul id="user-list"></ul>
+
+    <script>
+        // 创建用户
+        document.getElementById('create-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            axios
+                .post('/api/users', { name, age })
+                .then(function (response) {
+                    addUserToList(response.data);
+                    resetForm();
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        });
+
+        // 将用户添加到列表
+        function addUserToList(user) {
+            const userList = document.getElementById('user-list');
+            const li = document.createElement('li');
+            li.setAttribute('data-id', user.id);
+            li.innerHTML = `
+                <span>姓名: <span id="name-${user.id}">${user.name}</span></span>
+                <span>年龄: <span id="age-${user.id}">${user.age}</span></span>
+                <button onclick="editUser(${user.id})">编辑</button>
+                <button onclick="deleteUser(${user.id})">删除</button>
+                <div id="edit-form-${user.id}" style="display: none;">
+                    <input type="text" id="edit-name-${user.id}" placeholder="新姓名" />
+                    <input type="number" id="edit-age-${user.id}" placeholder="新年龄" />
+                    <button onclick="saveEdit(${user.id})">保存</button>
+                </div>
+            `;
+            userList.appendChild(li);
+        }
+
+        // 重置创建表单
+        function resetForm() {
+            document.getElementById('name').value = '';
+            document.getElementById('age').value = '';
+        }
+
+        // 获取所有用户
+        axios
+            .get('/api/users')
+            .then(function (response) {
+                response.data.forEach(function (user) {
+                    addUserToList(user);
+                });
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+
+        // 显示编辑表单
+        function editUser(userId) {
+            const editForm = document.getElementById(`edit-form-${userId}`);
+            editForm.style.display = 'block';
+        }
+
+        // 保存编辑后的用户数据
+        function saveEdit(userId) {
+            const newName = document.getElementById(`edit-name-${userId}`).value;
+            const newAge = document.getElementById(`edit-age-${userId}`).value;
+            
+            axios
+                .put(`/api/users/${userId}`, { name: newName, age: newAge })
+                .then(function (response) {
+                    const nameElement = document.getElementById(`name-${userId}`);
+                    const ageElement = document.getElementById(`age-${userId}`);
+                    nameElement.innerText = response.data.name;
+                    ageElement.innerText = response.data.age;
+                    resetEditForm(userId);
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        }
+
+        // 重置编辑表单
+        function resetEditForm(userId) {
+            const editForm = document.getElementById(`edit-form-${userId}`);
+            const nameInput = document.getElementById(`edit-name-${userId}`);
+            const ageInput = document.getElementById(`edit-age-${userId}`);
+            editForm.style.display = 'none';
+            nameInput.value = '';
+            ageInput.value = '';
+        }
+
+        // 删除用户
+        function deleteUser(userId) {
+            axios
+                .delete(`/api/users/${userId}`)
+                .then(function () {
+                    const userList = document.getElementById('user-list');
+                    const userItem = userList.querySelector(`li[data-id="${userId}"]`);
+                    userList.removeChild(userItem);
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        }
+    </script>
+</body>
+
+</html>

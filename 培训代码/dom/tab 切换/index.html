@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tab 切换布局</title>
+<style>
+    /* 隐藏所有 tab 内容 */
+    .tab-content {
+        display: none;
+    }
+
+    /* 显示当前选中的 tab 内容 */
+    .tab-content.active {
+        display: block;
+    }
+
+    /* tab 导航样式 */
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+    /* tab 按钮样式 */
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+    }
+
+    /* 激活状态的 tab 按钮样式 */
+    .tab button.active {
+        background-color: #ccc;
+    }
+</style>
+</head>
+<body>
+
+<div class="tab">
+    <button class="tablinks active" >Tab 1</button>
+    <button class="tablinks">Tab 2</button>
+    <button class="tablinks" >Tab 3</button>
+</div>
+
+<div class="tab-content active">
+    这是 Tab 1 的内容
+</div>
+
+<div class="tab-content">
+    <h3>Tab 2 内容</h3>
+    <p>这是 Tab 2 的内容。</p>
+</div>
+
+<div class="tab-content">
+    <h3>Tab 3 内容</h3>
+    <p>这是 Tab 3 的内容。</p>
+</div>
+
+<script>
+
+let tabs = document.getElementsByClassName('tablinks');
+
+for (let index = 0; index < tabs.length; index++) {
+    const tab = tabs[index];
+    tab.onclick=function(){
+        // 其他元素移除激活样式
+        for (let i = 0; i < tabs.length; i++) {
+            tabs[i].classList.remove('active');
+        }
+        // 点击到的元素添加激活样式 
+        this.classList.add('active');
+    }
+}
+   
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>超高频考点 子组件传值 emit </title>
+    <script src="./vue.global.js"></script>
+    <script src="./child.js"></script>
+    
+</head>
+<body>
+    <div id="app">
+          <div>父组件显示的值:{{msg}}</div>
+          <!--  父组件需要通过 @ + 自定义的事件名 来接收子组件传递过来的值  -->
+         <child  @custom-event="changeMessage"></child>
+        
+    </div>
+    <script>
+        const {ref,reactive} = Vue;
+        const app = Vue.createApp({
+            setup(){
+                let msg = ref('hello');
+               let changeMessage =(message)=>{
+                  msg.value = message
+               }
+               return {
+                changeMessage,
+                msg
+               }
+            }
+        })
+        app.component('child', child);
+        app.mount('#app') // 把 vue 示例进行挂载
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表渲染 必考点</title>
+    <script src="./vue.global.js"></script>
+    
+</head>
+<body>
+    <div id="app">
+        <!-- v-for  v-for="item in items" -->
+         <li v-for="(item,index) in items" :key="item.name">
+            <span>商品名称 {{item.name}}</span><br>
+            <span>商品价格{{item.price}}</span><br>
+            <span>商品数量{{item.count}}</span>
+         </li>
+         <!-- 表单输入  -->
+         <input type="text" v-model="inputVal"> 
+         <span>你输入的值为：{{inputVal}}</span>  
+    </div>
+    <script>
+        const {ref,reactive} = Vue;
+        const app = Vue.createApp({
+            setup(){
+                const inputVal = ref('');
+                const items = ref([{name:'apple',price:12,count:3},{name:'banana',price:10,count:5},{name:'pear',price:15,count:2}]);
+                return {
+                    items,
+                    inputVal
+                } 
+            }
+        })
+        app.mount('#app') // 把 vue 示例进行挂载
+    </script>
+</body>
+</html>
