@@ -75,7 +75,7 @@ export default defineConfig({
     sidebar: {
       "/profile/": [
         {
-          text: "真题解析",
+          text: "WEB 题型分析",
           items: [
             { text: "真题解析（HTML+CSS）", link: "/profile/03" },
             { text: "真题解析（函数封装）", link: "/profile/04" },

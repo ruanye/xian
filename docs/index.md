@@ -13,7 +13,7 @@ hero:
       text: 开始
       link: /base/01
     - theme: alt
-      text: 真题解析
+      text: WEB 题型分析
       link: /profile/03
     - theme: alt
       text: 备赛专区
